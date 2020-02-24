@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewModel"
             type="com.nr.simplegallery.viewModel.MainViewModel" />
@@ -13,12 +12,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        android:background="@android:color/black"
+        tools:context=".view.MainActivity">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/imagesRV"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:text="@={viewModel.text}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
