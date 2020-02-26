@@ -5,6 +5,8 @@ import android.os.Bundle;
 import com.nr.simplegallery.R;
 import com.nr.simplegallery.adapters.ImageListAdapter;
 import com.nr.simplegallery.databinding.ActivityMainBinding;
+import com.nr.simplegallery.interfaces.ImageListListener;
+import com.nr.simplegallery.model.ImageItem;
 import com.nr.simplegallery.utilities.Constants;
 import com.nr.simplegallery.viewModel.MainViewModel;
 
@@ -16,7 +18,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ImageListListener {
 
     private ActivityMainBinding binding;
     private MainViewModel viewModel;
@@ -40,10 +42,17 @@ public class MainActivity extends AppCompatActivity {
 
         binding.imagesRV.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         try {
-            adapter = new ImageListAdapter(this).setList(new JSONArray(Constants.data));
+            adapter = new ImageListAdapter(this)
+                    .setList(new JSONArray(Constants.data))
+                    .setListener(this);
             binding.imagesRV.setAdapter(adapter);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onClickImageItem(ImageItem item) {
+        Constants.makeLog("item clicked : " + item.getTitle());
     }
 }

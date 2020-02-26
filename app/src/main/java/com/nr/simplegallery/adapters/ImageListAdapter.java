@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.nr.simplegallery.R;
+import com.nr.simplegallery.interfaces.ImageListListener;
 import com.nr.simplegallery.model.ImageItem;
 
 import org.json.JSONArray;
@@ -23,10 +24,16 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
 
     private List<ImageItem> dataList;
     private Context context;
+    private ImageListListener listener;
 
     public ImageListAdapter(Context context) {
         this.context = context;
         this.dataList = new ArrayList<>();
+    }
+
+    public ImageListAdapter setListener(ImageListListener listener) {
+        this.listener = listener;
+        return this;
     }
 
     public ImageListAdapter setList(JSONArray array) {           // adding images items into datalist
@@ -57,20 +64,28 @@ public class ImageListAdapter extends RecyclerView.Adapter<ImageListAdapter.View
         return dataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         ImageView imageIV;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageIV = (ImageView) itemView.findViewById(R.id.imageIV);
+            itemView.setOnClickListener(this);
         }
 
         void setData(ImageItem item) {                              //seting data for view holder
 
             Glide.with(context)
                     .load(item.getUrl())
+                    .thumbnail(Glide.with(context).load(item.getUrl()))
                     .centerCrop()
                     .into(imageIV);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (listener == null) return;
+            listener.onClickImageItem(dataList.get(getAdapterPosition()));
         }
     }
 }
