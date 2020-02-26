@@ -1,5 +1,6 @@
 package com.nr.simplegallery.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.nr.simplegallery.R;
@@ -54,5 +55,7 @@ public class MainActivity extends AppCompatActivity implements ImageListListener
     @Override
     public void onClickImageItem(ImageItem item) {
         Constants.makeLog("item clicked : " + item.getTitle());
+        Intent intent = new Intent(this, ImageViewerActivity.class);
+        startActivity(intent);
     }
 }
