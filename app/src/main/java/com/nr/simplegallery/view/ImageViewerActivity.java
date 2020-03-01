@@ -3,6 +3,7 @@ package com.nr.simplegallery.view;
 import android.os.Bundle;
 
 import com.nr.simplegallery.R;
+import com.nr.simplegallery.adapters.ImagePagerAdapter;
 import com.nr.simplegallery.databinding.ActivityImageViewerBinding;
 import com.nr.simplegallery.viewModel.ImageViewerViewModel;
 
@@ -19,6 +20,8 @@ public class ImageViewerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setBind();
+        setData();
+        setAdapter();                                          //setting viewpager adapter
     }
 
     private void setBind() {
@@ -27,4 +30,13 @@ public class ImageViewerActivity extends AppCompatActivity {
         binding.setViewModel(viewModel);
     }
 
+    private void setData() {
+        viewModel.selected_image_pos = getIntent().getIntExtra("image_position", 0);
+    }
+
+    private void setAdapter() {
+        ImagePagerAdapter adapter = new ImagePagerAdapter(getSupportFragmentManager(), 0).setList(viewModel.dataList);
+        binding.imageVP.setAdapter(adapter);
+        binding.imageVP.setCurrentItem(viewModel.selected_image_pos);
+    }
 }
