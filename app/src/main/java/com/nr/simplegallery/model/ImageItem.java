@@ -13,9 +13,10 @@ public class ImageItem {
     private String serviceVersion;
     private String title;
     private String url;
+    private JSONObject jsonObject;
 
     public ImageItem(JSONObject object) {
-
+        this.jsonObject = object;
         this.copyright = object.optString("copyright");
         this.date = object.optString("date");
         this.explanation = object.optString("explanation");
@@ -90,4 +91,11 @@ public class ImageItem {
         this.url = url;
     }
 
+    public JSONObject getJsonObject() {
+        return jsonObject;
+    }
+
+    public void setJsonObject(JSONObject jsonObject) {
+        this.jsonObject = jsonObject;
+    }
 }
