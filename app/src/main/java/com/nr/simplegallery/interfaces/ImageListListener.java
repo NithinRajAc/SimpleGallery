@@ -4,5 +4,5 @@ import com.nr.simplegallery.model.ImageItem;
 
 public interface ImageListListener {
 
-    void onClickImageItem(ImageItem item);
+    void onClickImageItem(ImageItem item, int position);
 }
