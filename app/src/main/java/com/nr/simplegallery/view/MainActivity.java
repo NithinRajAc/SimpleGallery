@@ -53,9 +53,10 @@ public class MainActivity extends AppCompatActivity implements ImageListListener
     }
 
     @Override
-    public void onClickImageItem(ImageItem item) {
+    public void onClickImageItem(ImageItem item, int position) {
         Constants.makeLog("item clicked : " + item.getTitle());
         Intent intent = new Intent(this, ImageViewerActivity.class);
+        intent.putExtra("image_position", position);
         startActivity(intent);
     }
 }
