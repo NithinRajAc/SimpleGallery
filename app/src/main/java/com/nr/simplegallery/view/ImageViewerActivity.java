@@ -1,6 +1,8 @@
 package com.nr.simplegallery.view;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 
 import com.nr.simplegallery.R;
 import com.nr.simplegallery.adapters.ImagePagerAdapter;
@@ -8,6 +10,7 @@ import com.nr.simplegallery.databinding.ActivityImageViewerBinding;
 import com.nr.simplegallery.viewModel.ImageViewerViewModel;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -19,6 +22,7 @@ public class ImageViewerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.postponeEnterTransition(this);
         setBind();
         setData();
         setAdapter();                                          //setting viewpager adapter
@@ -28,6 +32,12 @@ public class ImageViewerActivity extends AppCompatActivity {
         viewModel = ViewModelProviders.of(this).get(ImageViewerViewModel.class);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_image_viewer);
         binding.setViewModel(viewModel);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            ;
+            binding.imageVP.setTransitionName("root");
+        }
+        binding.imageVP.setVisibility(View.VISIBLE);
     }
 
     private void setData() {
